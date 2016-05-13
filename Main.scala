@@ -3,16 +3,23 @@ import java.io.File
 object Main {
   def main(args: Array[String]) = {
     var mapper = new Mapper
-    var map1 = mapper.generate("test.txt")
-    var map2 = mapper.generate("test2.txt")
 
     var finder = new FileFinder
     var files = finder.recursiveListFiles(new File("."))
 
-    println(files)
+    mapper.listOfMapsFromFiles(files)
   }
 
   class Mapper {
+    def listOfMapsFromFiles(files: Seq[File]) = {
+      var head = files.head.toString
+      var tail = files.tail
+      var map = generate(head)
+      println(map)
+      var array = Array(map)
+      println(array)
+    }
+
     def generate(file: String): Map[String, Int] = {
       var map = scala.io.Source.fromFile(file)
         .getLines
@@ -31,14 +38,13 @@ object Main {
   class FileFinder {
     def recursiveListFiles(base: File, recursive: Boolean = true, hidden:
 Boolean = false): Seq[File] = {
-      val files = base.listFiles
+      val files = base.listFiles.filter(!_.isHidden)
         val result = files.filter(_.isFile)
         result ++
-        files
-        .filter(_.isDirectory)
-        .filter(_.getName.head.toString == ".")
-        .filter(_ => recursive)
-        .flatMap(recursiveListFiles(_, recursive))
+          files
+          .filter(_.isDirectory)
+          .filter(_ => recursive)
+          .flatMap(recursiveListFiles(_, recursive))
     }
   }
 }
