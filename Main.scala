@@ -8,12 +8,17 @@ object Main {
     var files = finder.recursiveListFiles(new File("."))
 
     var mapList = mapper.listOfMapsFromFiles(files)
-    println(mapList.size)
+    var reducedMap = mapper.reduceMaps(mapList)
+    println(reducedMap)
+    println(reducedMap.getClass)
+    println(reducedMap.size)
   }
 
   class Mapper {
     def reduceMaps(maps: Seq[Map[String, Int]]) = {
-      println(maps)
+      maps
+        .foldLeft(maps(0))((b,a) => addMaps(b,a))
+        .filterKeys(_ != "")
     }
 
     def listOfMapsFromFiles(files: Seq[File]): Seq[Map[String, Int]] = {
