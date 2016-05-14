@@ -1,23 +1,27 @@
 import java.io.File
 
 object Main {
-  def main(args: Array[String]) = {
+  def main(args: Array[String]): Unit = {
     var mapper = new Mapper
 
     var finder = new FileFinder
     var files = finder.recursiveListFiles(new File("."))
 
-    mapper.listOfMapsFromFiles(files)
+    var mapList = mapper.listOfMapsFromFiles(files)
+    println(mapList.size)
   }
 
   class Mapper {
-    def listOfMapsFromFiles(files: Seq[File]) = {
+    def reduceMaps(maps: Seq[Map[String, Int]]) = {
+      println(maps)
+    }
+
+    def listOfMapsFromFiles(files: Seq[File]): Seq[Map[String, Int]] = {
       var head = files.head.toString
       var tail = files.tail
-      var map = generate(head)
-      println(map)
-      var array = Array(map)
-      println(array)
+      var results = Seq(generate(head))
+
+      if (tail.isEmpty) return results else results ++ listOfMapsFromFiles(tail)
     }
 
     def generate(file: String): Map[String, Int] = {
