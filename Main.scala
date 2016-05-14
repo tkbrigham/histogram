@@ -10,8 +10,6 @@ object Main {
     var mapList = mapper.listOfMapsFromFiles(files)
     var reducedMap = mapper.reduceMaps(mapList)
     println(reducedMap)
-    println(reducedMap.getClass)
-    println(reducedMap.size)
   }
 
   class Mapper {
