@@ -11,9 +11,11 @@
         ]);
 
         var options = {
-          title: 'Word counts',
+          title: 'Word Histogram',
           legend: { position: 'none' },
-          histogram: { bucketSize: 10 },
+          histogram: { bucketSize: 2 },
+          vAxis: { title: 'Number of Words Per Frequency' },
+          hAxis: { title: 'Frequency of Appearance' }
         };
 
         var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
