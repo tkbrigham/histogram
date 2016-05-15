@@ -10,20 +10,16 @@ import histogram.utils.mapper._
 import histogram.utils.unzipper._
 
 object Main extends App {
-  var mapper = new Mapper
-  var unzipper = new Unzipper
-  var finder = new Finder
+  val finder = new Finder
 
   def txtFiles = finder.recursiveListFiles(new File("."))
-  var zipFiles = finder.recursiveListFiles(new File("."), ".zip")
+  val zipFiles = finder.recursiveListFiles(new File("."), ".zip")
 
+  var unzipper = new Unzipper
   unzipper.unzip(zipFiles)
 
-  var mapList = mapper.listOfMapsFromFiles(txtFiles)
-  var reducedMap = mapper.reduceMaps(mapList)
-  var stringed = reducedMap.map { x => s"['${x._1}', ${x._2}]" }
-
-  var generator = new Generator(stringed.mkString(",\n          "),
-"html/TEMPLATE.html")
+  var mapper = new Mapper
+  val iterable = mapper.filesToIterable(txtFiles)
+  var generator = new Generator(iterable, "html/TEMPLATE.html")
   generator.sub
 }
