@@ -1,28 +1,29 @@
-import java.io.File
+import java.io._
+import sys.process._
 
 object Main {
   def main(args: Array[String]): Unit = {
     var mapper = new Mapper
-    var generator = new HtmlGen
 
     var finder = new FileFinder
     var files = finder.recursiveListFiles(new File("."))
 
-    generator.sub("sample.html")
+    var mapList = mapper.listOfMapsFromFiles(files)
+    var reducedMap = mapper.reduceMaps(mapList)
+    var stringed = reducedMap.map { x => s"['${x._1}', ${x._2}]" }
 
-    //var mapList = mapper.listOfMapsFromFiles(files)
-    //var reducedMap = mapper.reduceMaps(mapList)
-    //println(reducedMap)
+    var generator = new HtmlGen(stringed.mkString(",\n          "), "chart-test.html")
+    generator.sub
   }
 
-  class HtmlGen {
-    def sub(file: String) = {
-      var lines = io.Source.fromFile(file).getLines
-      var testing = lines.find(_.contains("{{ array }}"))
-      println(testing)
-      println(testing.getClass)
-      //println(lines.next())
-      //var testing = lines.map(in => if (in 
+  class HtmlGen(str: String, file: String) {
+    def sub = {
+      var ans = for (line <- io.Source.fromFile(file).getLines) yield (line.replace("{{ array }}", str))
+      val pw = new PrintWriter(new File("TEST.html"))
+      for (line <- ans) pw.write(line + "\n")
+      pw.close
+      //f.createNewFile()
+      //ans foreach println
     }
   }
 
