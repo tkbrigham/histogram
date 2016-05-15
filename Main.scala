@@ -24,8 +24,6 @@ object Main {
       for (line <- ans) pw.write(line + "\n")
       pw.close
       "open TEST.html" !
-      //f.createNewFile()
-      //ans foreach println
     }
   }
 
