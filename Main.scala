@@ -23,6 +23,7 @@ object Main extends App {
   var reducedMap = mapper.reduceMaps(mapList)
   var stringed = reducedMap.map { x => s"['${x._1}', ${x._2}]" }
 
-  var generator = new Generator(stringed.mkString(",\n          "), "chart-test.html")
+  var generator = new Generator(stringed.mkString(",\n          "),
+"html/TEMPLATE.html")
   generator.sub
 }
