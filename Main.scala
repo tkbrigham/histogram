@@ -63,9 +63,9 @@ object Main {
 
   class FileFinder {
     def recursiveListFiles(base: File, filetype: String = ".txt"): Seq[File] = {
+      // Assumes we don't want hidden files
       val files = base.listFiles.filter(!_.isHidden)
-        val result = files.filter(_.isFile)
-                      .filter(_.getName.endsWith(filetype))
+        val result = files.filter(_.isFile).filter(_.getName.endsWith(filetype))
         result ++
           files
           .filter(_.isDirectory)
@@ -77,7 +77,9 @@ object Main {
     def unzip(files: Seq[File]) = {
       files.foreach { file => 
         val dir = file.getCanonicalPath.replace(".zip", "")
-        s"unzip $file -d ${dir}_unzipped" !
+        // Assumes we don't already have a folder with the name
+        // "${zip_file}_unzipped"
+        s"unzip -o $file -d ${dir}_unzipped" !
       }
     }
   }
