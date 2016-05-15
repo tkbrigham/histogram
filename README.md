@@ -31,6 +31,6 @@ scala histogram.Main path/to/target/directory
 - Does not include hidden files
 - App takes no options to alter graph dimensions/settings
   - Different amounts of words/frequencies have also not been tested
-- There's probably a nicer way to have .html template and inject scala strings,
+- There's probably a nicer way to inject Scala into an HTML template,
   but `XML.loadFile` didn't seem to be the solution
 - Should binaries be added to git?
