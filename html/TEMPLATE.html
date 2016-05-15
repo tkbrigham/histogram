@@ -1,3 +1,5 @@
+<!-- CREDIT FOR THIS TEMPLATE GOES TO GOOGLE -->
+<!-- https://developers.google.com/chart/interactive/docs/gallery/histogram -->
 <html>
   <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -6,7 +8,7 @@
       google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Testing', 'something'],
+          ['Word', 'Frequency'],
           {{ array }}
         ]);
 
