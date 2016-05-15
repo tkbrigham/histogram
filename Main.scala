@@ -11,16 +11,13 @@ object Main {
     def txtFiles = finder.recursiveListFiles(new File("."))
     var zipFiles = finder.recursiveListFiles(new File("."), ".zip")
 
-    //println(txtFiles.size + "\n")
-    //println(zipFiles.size + "\n")
     unzipper.unzip(zipFiles)
-    //println(txtFiles.size)
 
-    //var mapList = mapper.listOfMapsFromFiles(files)
-    //var reducedMap = mapper.reduceMaps(mapList)
-    //var stringed = reducedMap.map { x => s"['${x._1}', ${x._2}]" }
+    var mapList = mapper.listOfMapsFromFiles(txtFiles)
+    var reducedMap = mapper.reduceMaps(mapList)
+    var stringed = reducedMap.map { x => s"['${x._1}', ${x._2}]" }
 
-    //var generator = new HtmlGen(stringed.mkString(",\n          "), "chart-test.html")
+    var generator = new HtmlGen(stringed.mkString(",\n          "), "chart-test.html")
     //generator.sub
   }
 
@@ -78,7 +75,10 @@ object Main {
 
   class FileUnzipper {
     def unzip(files: Seq[File]) = {
-      files.foreach { file => s"unzip $file -d ${file.getParent}" ! }
+      files.foreach { file => 
+        val dir = file.getCanonicalPath.replace(".zip", "")
+        s"unzip $file -d ${dir}_unzipped" !
+      }
     }
   }
 }
