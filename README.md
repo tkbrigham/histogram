@@ -2,12 +2,12 @@
 ##### NOTE: first iteration
 
 A small app that:
-1. Takes a target directory as (currently) a command-line parameter
-2. Recursively searches for all .zip files and unzips them into a new folder
+  1. Takes a target directory as (currently) a command-line parameter
+  2. Recursively searches for all .zip files and unzips them into a new folder
    inside the .zip file parent folder
-3. Recursively finds all .txt files starting with the target directory
-4. Counts all words found in all .txt files
-5. Opens a (Google template) histogram that plots the found words in a fun way
+  3. Recursively finds all .txt files starting with the target directory
+  4. Counts all words found in all .txt files
+  5. Opens a (Google template) histogram that plots the found words in a fun way
 
 # Prerequisites
 - `scala` and `scalac` binaries (written/compiled/tested on v2.11.8)
@@ -19,7 +19,7 @@ In terminal, run the following commands:
 git clone git@github.com:tkbrigham/histogram.git
 cd histogram
 scalac *.scala
-scala histogram.Main <name of target directory>
+scala histogram.Main path/to/target/directory
 ```
 
 # Known Issues/Areas for Improvement
