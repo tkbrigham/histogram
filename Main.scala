@@ -1,5 +1,6 @@
 import java.io._
 import sys.process._
+import scala.language.postfixOps
 
 object Main {
   def main(args: Array[String]): Unit = {
@@ -22,6 +23,7 @@ object Main {
       val pw = new PrintWriter(new File("TEST.html"))
       for (line <- ans) pw.write(line + "\n")
       pw.close
+      "open TEST.html" !
       //f.createNewFile()
       //ans foreach println
     }
