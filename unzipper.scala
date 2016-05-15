@@ -1,4 +1,4 @@
-package unzipper
+package histogram.utils.unzipper
 
 import java.io._
 import sys.process._

@@ -1,4 +1,4 @@
-package finder
+package histogram.utils.finder
 
 import java.io._
 
