@@ -1,8 +1,6 @@
 package histogram
 
 import java.io._
-import sys.process._
-import scala.language.postfixOps
 
 import histogram.utils.finder._
 import histogram.utils.generator._
@@ -11,7 +9,8 @@ import histogram.utils.unzipper._
 
 object Main extends App {
   if (args.length == 0) {
-    println("Please provide targetted directory")
+    println("ERROR: Please provide target directory")
+    println("ex: scala histogram.Main /Users/tkbrigham/folder_of_txt_files")
     System.exit(1)
   } else {
     val finder = new Finder
