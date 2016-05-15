@@ -5,16 +5,23 @@ import scala.language.postfixOps
 object Main {
   def main(args: Array[String]): Unit = {
     var mapper = new Mapper
-
+    var unzipper = new FileUnzipper
     var finder = new FileFinder
-    var files = finder.recursiveListFiles(new File("."))
 
-    var mapList = mapper.listOfMapsFromFiles(files)
-    var reducedMap = mapper.reduceMaps(mapList)
-    var stringed = reducedMap.map { x => s"['${x._1}', ${x._2}]" }
+    def txtFiles = finder.recursiveListFiles(new File("."))
+    var zipFiles = finder.recursiveListFiles(new File("."), ".zip")
 
-    var generator = new HtmlGen(stringed.mkString(",\n          "), "chart-test.html")
-    generator.sub
+    //println(txtFiles.size + "\n")
+    //println(zipFiles.size + "\n")
+    unzipper.unzip(zipFiles)
+    //println(txtFiles.size)
+
+    //var mapList = mapper.listOfMapsFromFiles(files)
+    //var reducedMap = mapper.reduceMaps(mapList)
+    //var stringed = reducedMap.map { x => s"['${x._1}', ${x._2}]" }
+
+    //var generator = new HtmlGen(stringed.mkString(",\n          "), "chart-test.html")
+    //generator.sub
   }
 
   class HtmlGen(str: String, file: String) {
@@ -58,15 +65,20 @@ object Main {
   }
 
   class FileFinder {
-    def recursiveListFiles(base: File, recursive: Boolean = true, hidden:
-Boolean = false): Seq[File] = {
+    def recursiveListFiles(base: File, filetype: String = ".txt"): Seq[File] = {
       val files = base.listFiles.filter(!_.isHidden)
         val result = files.filter(_.isFile)
+                      .filter(_.getName.endsWith(filetype))
         result ++
           files
           .filter(_.isDirectory)
-          .filter(_ => recursive)
-          .flatMap(recursiveListFiles(_, recursive))
+          .flatMap(recursiveListFiles(_, filetype))
+    }
+  }
+
+  class FileUnzipper {
+    def unzip(files: Seq[File]) = {
+      files.foreach { file => s"unzip $file -d ${file.getParent}" ! }
     }
   }
 }
