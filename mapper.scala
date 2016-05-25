@@ -5,7 +5,7 @@ import java.io._
 class Mapper {
   def reduceMaps(maps: Seq[Map[String, Int]]) = {
     maps
-      .foldLeft(maps(0))((b,a) => addMaps(b,a))
+      .foldLeft(Map("" -> 0))((b,a) => addMaps(b,a))
       .filterKeys(_ != "")
   }
 
