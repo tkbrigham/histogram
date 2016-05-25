@@ -15,14 +15,17 @@ object Main extends App {
   } else {
     val finder = new Finder
 
-    def txtFiles = finder.recursiveListFiles(new File(args(0)))
+    // Find and unzip all .zip files (ambivalent of zip contents)
     val zipFiles = finder.recursiveListFiles(new File(args(0)), ".zip")
-
     var unzipper = new Unzipper
     unzipper.unzip(zipFiles)
 
+    // Find all .txt files, and create collection of words and frequencies
     var mapper = new Mapper
+    def txtFiles = finder.recursiveListFiles(new File(args(0)))
     val iterable = mapper.filesToIterable(txtFiles)
+
+    // Generate html file and open it
     var generator = new Generator(iterable, "html/TEMPLATE.html")
     generator.sub
   }
